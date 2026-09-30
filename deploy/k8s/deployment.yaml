@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: journey-agent}
+spec:
+  replicas: 3
+  selector: {matchLabels: {app: journey-agent}}
+  template:
+    metadata: {labels: {app: journey-agent}}
+    spec:
+      containers:
+      - name: api
+        image: registry/journey-agent:1.0.0
+        ports: [{containerPort: 8080}]
+        readinessProbe: {httpGet: {path: /healthz, port: 8080}}
